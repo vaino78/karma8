@@ -51,7 +51,10 @@ FROM
     `users` A
     LEFT JOIN `notification` N ON(A.`id`=N.`user_id` && N.`checkts`=%1$u)
 WHERE
-    N.`id` IS NULL 
+    (A.`confirmed`=1 || A.`valid`=1)
+    && A.`validts`>UNIX_TIMESTAMP()
+    && A.`validts`<=(UNIX_TIMESTAMP()+%1$u)
+    && N.`id` IS NULL 
 %s
 EOS
         ,
