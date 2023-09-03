@@ -19,3 +19,11 @@ function do_wait(int $seconds): void
     }
     sleep($seconds);
 }
+
+function do_error(string $message, ?int $level = null): void
+{
+    if ($level === null) {
+        $level = E_USER_ERROR;
+    }
+    trigger_error($message, $level);
+}
