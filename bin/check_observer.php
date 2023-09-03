@@ -8,10 +8,10 @@ $limit = check_observer_settings_limit();
 $pause = check_observer_settings_pause();
 
 while (true) {
-  $observed = check_observer_process_pack($db, $limit);
-  if ($observed === 0) {
-    do_wait($pause);
-    continue;
-  }
-  
+    $observed = check_observer_process_pack($db, $limit);
+    if ($observed === 0) {
+        do_wait($pause);
+        continue;
+    }
+
 }

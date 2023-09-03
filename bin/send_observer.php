@@ -10,11 +10,9 @@ $limit = env_extract_send_observer_limit();
 $pause = env_extract_send_observer_pause();
 
 while (true) {
-  $observed = send_observer_process_pack($db, $checkTimestamp, $limit);
-  if ($observed === 0) {
-    if ($pause > 0) {
-      sleep($pause);
+    $observed = send_observer_process_pack($db, $checkTimestamp, $limit);
+    if ($observed === 0) {
+        do_wait($pause);
+        continue;
     }
-    continue;
-  }
 }
