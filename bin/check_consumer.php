@@ -7,8 +7,8 @@ require_once __DIR__ . '/../shared/bootstrap.php';
 
 $db = include APP_SHARED_PATH . '/db.php';
 
-$limit = env_extract_integer('VALIDATION_CONSUMER_PACK_LIMIT');
-$pause = env_extract_numeric('VALIDATION_CONSUMER_PAUSE');
+$limit = env_extract_integer('VALIDATION_CONSUMER_PACK_LIMIT', 1);
+$pause = env_extract_integer('VALIDATION_CONSUMER_PAUSE', 0);
 
 while (true) {
     db_transaction_start($db);
