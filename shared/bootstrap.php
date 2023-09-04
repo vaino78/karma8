@@ -10,4 +10,5 @@ require_once APP_SRC_PATH . '/common.php';
 require_once APP_SRC_PATH . '/db.php';
 require_once APP_SRC_PATH . '/send_observer.php';
 require_once APP_SRC_PATH . '/send_consumer.php';
+require_once APP_SRC_PATH . '/check_observer.php';
 

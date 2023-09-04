@@ -21,6 +21,23 @@ function db_error(mysqli $db, string $message, ?int $level = null): void
     );
 }
 
+function db_query_error(mysqli_stmt $query, string $message, ?int $level = null): void
+{
+    do_error(
+        sprintf(
+            'DB query error%s: [%u] %s',
+            (
+                !empty($message)
+                ? sprintf(' "%s"', $message)
+                : ''
+            ),
+            mysqli_stmt_errno($query),
+            mysqli_stmt_error($query)
+        ),
+        $level
+    );
+}
+
 function db_transaction_start(mysqli $db): void
 {
     $result = mysqli_begin_transaction($db);
@@ -49,4 +66,42 @@ function db_transaction_rollback(mysqli $db): void
     }
 
     db_error($db, 'Cannot rollback transaction');
+}
+
+function db_query_build(mysqli $db, string $query): mysqli_stmt
+{
+    $result = mysqli_prepare($db, $query);
+    if ($result === false) {
+        db_error($db, 'Cannot build query');
+    }
+
+    return $result;
+}
+
+function db_query_execute(mysqli_stmt $query, ?array $params = null, string $onErrorMessage = ''): int
+{
+    db_query_run($query, $params, $onErrorMessage);
+    return (int)mysqli_stmt_affected_rows($query);
+}
+
+function db_query_result(mysqli_stmt $query, ?array $params = null, string $onErrorMessage = ''): mysqli_result
+{
+    db_query_run($query, $params, $onErrorMessage);
+
+    $result = mysqli_stmt_get_result($query);
+    if ($result === false) {
+        db_query_error($query, $onErrorMessage);
+    }
+
+    return $result;
+}
+
+function db_query_run(mysqli_stmt $query, ?array $params = null, string $onErrorMessage = ''): void
+{
+    $result = mysqli_stmt_execute($query, $params);
+    if ($result === true) {
+        return;
+    }
+
+    db_query_error($query, $onErrorMessage);
 }

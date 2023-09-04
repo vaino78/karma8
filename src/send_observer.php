@@ -21,12 +21,12 @@ function settings_timestamp(array $arguments, string $name = 'SEND_OBSERVER_CHEC
 
 function settings_limit(string $name = 'SEND_OBSERVER_PACK_LIMIT'): int
 {
-    return extract_env_integer($name, 'Cannot get the limit settings for send observer');
+    return env_extract_integer($name, 'Cannot get the limit settings for send observer');
 }
 
 function settings_pause(string $name = 'SEND_OBSERVER_PAUSE'): int
 {
-    return extract_env_numeric($name, 'Invalid value for send observer pause');
+    return env_extract_numeric($name, 'Invalid value for send observer pause');
 }
 
 function process_pack(mysqli $db, int $checkTimestamp, int $limit): int

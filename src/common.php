@@ -28,7 +28,7 @@ function do_error(string $message, ?int $level = null): void
     trigger_error($message, $level);
 }
 
-function extract_env_numeric(string $name, string $onInvalidMessage): int
+function env_extract_numeric(string $name, string $onInvalidMessage): int
 {
     $result = getenv($name);
     if (is_numeric($result)) {
@@ -38,17 +38,17 @@ function extract_env_numeric(string $name, string $onInvalidMessage): int
     return (int)$result;
 }
 
-function extract_env_integer(string $name, string $onEmptyMessage): int
+function env_extract_integer(string $name, string $onEmptyMessage): int
 {
-    return (int)extract_env($name, $onEmptyMessage);
+    return (int)env_extract($name, $onEmptyMessage);
 }
 
-function extract_env_string(string $name, string $onEmptyMessage): string
+function env_extract_string(string $name, string $onEmptyMessage): string
 {
-    return (string)extract_env($name, $onEmptyMessage);
+    return (string)env_extract($name, $onEmptyMessage);
 }
 
-function extract_env(string $name, string $onEmptyMessage): mixed
+function env_extract(string $name, string $onEmptyMessage): mixed
 {
     $result = getenv($name);
     if (empty($result)) {

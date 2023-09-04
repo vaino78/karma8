@@ -8,22 +8,22 @@ use mysqli_stmt;
 
 function settings_email_from(string $name = 'EMAIL_FROM'): string
 {
-    return extract_env_string($name, 'Cannot get email from value');
+    return env_extract_string($name, 'Cannot get email from value');
 }
 
 function settings_pack_limit(string $name = 'SEND_CONSUMER_PACK_LIMIT'): int
 {
-    return extract_env_integer($name, 'Cannot get consumer pack limit value');
+    return env_extract_integer($name, 'Cannot get consumer pack limit value');
 }
 
 function settings_template(string $name = 'MESSAGE_TEMPLATE'): string
 {
-    return extract_env_string($name, 'Cannot get message template');
+    return env_extract_string($name, 'Cannot get message template');
 }
 
 function settings_pause(string $name = 'SEND_CONSUMER_PAUSE'): int
 {
-    return extract_env_numeric($name, 'Invalid value for send consumer pause');
+    return env_extract_numeric($name, 'Invalid value for send consumer pause');
 }
 
 function processing_data(mysqli $db, int $limit): array
