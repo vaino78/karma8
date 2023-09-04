@@ -28,32 +28,43 @@ function do_error(string $message, ?int $level = null): void
     trigger_error($message, $level);
 }
 
-function env_extract_numeric(string $name, string $onInvalidMessage): int
+function env_extract_numeric(string $name, string $onInvalidMessage = ''): int
 {
     $result = getenv($name);
     if (is_numeric($result)) {
-        do_error($onInvalidMessage);
+        do_error($onInvalidMessage ?: env_invalid_message($name));
     }
 
     return (int)$result;
 }
 
-function env_extract_integer(string $name, string $onEmptyMessage): int
+function env_extract_integer(string $name, string $onEmptyMessage = ''): int
 {
     return (int)env_extract($name, $onEmptyMessage);
 }
 
-function env_extract_string(string $name, string $onEmptyMessage): string
+function env_extract_string(string $name, string $onEmptyMessage = ''): string
 {
     return (string)env_extract($name, $onEmptyMessage);
 }
 
-function env_extract(string $name, string $onEmptyMessage): mixed
+function env_extract(string $name, string $onEmptyMessage = ''): mixed
 {
     $result = getenv($name);
     if (empty($result)) {
-        do_error($onEmptyMessage);
+        do_error($onEmptyMessage ?: env_error_message($name));
     }
 
     return $result;
+}
+
+function env_error_message(string $name): string
+{
+    return sprintf('Environment variable "%s" is not set or empty', $name);
+}
+
+
+function env_invalid_message(string $name): string
+{
+    return sprintf('"%s" is invalid', $name);
 }

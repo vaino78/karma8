@@ -1,17 +1,19 @@
 <?php
 declare(strict_types=1);
 
+use check\consumer;
+
 require_once __DIR__ . '/../shared/bootstrap.php';
 
 $db = include APP_SHARED_PATH . '/db.php';
 
-$limit = check_consumer_settings_limit();
-$pause = check_consumer_settings_pause();
+$limit = env_extract_integer('VALIDATION_CONSUMER_PACK_LIMIT');
+$pause = env_extract_numeric('VALIDATION_CONSUMER_PAUSE');
 
 while (true) {
     db_transaction_start($db);
 
-    $data = check_consumer_get_data($db, $limit);
+    $data = consumer\get_data($db, $limit);
     if (empty($data)) {
         db_transaction_rollback($db);
         do_wait($pause);
@@ -19,9 +21,13 @@ while (true) {
     }
 
     foreach ($data as $datum) {
-        $email = check_consumer_data_extract_email($datum);
+        $userId = consumer\data_extract_user($datum);
+        $email = consumer\data_extract_email($datum);
         $result = check_email($email);
-        check_consumer_store_result($email, $result);
+        $stored = consumer\store_result($db, $userId, $email, $result);
+        if (!$stored) {
+            consumer\cancel($db, $userId);
+        }
     }
 
     db_transaction_commit($db);
