@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace send\consumer;
+namespace notification\consumer;
 
 use mysqli;
 

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-use check\observer;
+use validation\observer;
 
 require_once __DIR__ . '/../shared/bootstrap.php';
 

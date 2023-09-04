@@ -8,7 +8,7 @@ set_time_limit(0);
 
 require_once APP_SRC_PATH . '/common.php';
 require_once APP_SRC_PATH . '/db.php';
-require_once APP_SRC_PATH . '/send_observer.php';
-require_once APP_SRC_PATH . '/send_consumer.php';
-require_once APP_SRC_PATH . '/check_observer.php';
-require_once APP_SRC_PATH . '/check_consumer.php';
+require_once APP_SRC_PATH . '/notification/observer.php';
+require_once APP_SRC_PATH . '/notification/consumer.php';
+require_once APP_SRC_PATH . '/validation/observer.php';
+require_once APP_SRC_PATH . '/validation/consumer.php';

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace send\observer;
+namespace notification\observer;
 
 use mysqli;
 

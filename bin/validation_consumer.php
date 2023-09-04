@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-use check\consumer;
+use validation\consumer;
 
 require_once __DIR__ . '/../shared/bootstrap.php';
 

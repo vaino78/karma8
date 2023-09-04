@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-use send\consumer;
+use notification\consumer;
 
 require_once __DIR__ . '/../shared/bootstrap.php';
 

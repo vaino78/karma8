@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace check\consumer;
+namespace validation\consumer;
 
 use mysqli;
 
