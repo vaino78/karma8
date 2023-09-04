@@ -7,8 +7,8 @@ require_once __DIR__ . '/../shared/bootstrap.php';
 
 $db = include APP_SHARED_PATH . '/db.php';
 
-$limit = env_extract_integer('SEND_OBSERVER_PACK_LIMIT', 100);
-$pause = env_extract_integer('SEND_OBSERVER_PAUSE', 5);
+$limit = env_extract_integer('NOTIFICATION_OBSERVER_PACK_LIMIT', 100);
+$pause = env_extract_integer('NOTIFICATION_OBSERVER_PAUSE', 5);
 
 $checkTimestamp = observer\extract_timestamp_argument($argv);
 
