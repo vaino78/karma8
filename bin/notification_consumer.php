@@ -4,7 +4,9 @@ declare(strict_types=1);
 use notification\consumer;
 
 require_once __DIR__ . '/../shared/bootstrap.php';
+require_once APP_SRC_PATH . '/notification/consumer.php';
 
+/** @var mysqli $db */
 $db = include APP_SHARED_PATH . '/db.php';
 
 $limit = env_extract_integer('NOTIFICATION_CONSUMER_PACK_LIMIT', 1);
