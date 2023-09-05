@@ -5,13 +5,13 @@ namespace validation\observer;
 
 use mysqli;
 
-function process_pack(mysqli $db, int $limit): int
+function process_pack(mysqli $db, int $confirmationGap, int $limit): int
 {
-    $q = db_query_build($db, create_process_pack_query($limit));
+    $q = db_query_build($db, create_process_pack_query($confirmationGap, $limit));
     return db_query_execute($q, null, 'Error on processing validation pack');
 }
 
-function create_process_pack_query(int $limit): string
+function create_process_pack_query(int $confirmationGap, int $limit): string
 {
     return sprintf(
         <<<EOL
@@ -26,10 +26,16 @@ WHERE
     V.`user_id` IS NULL
     && U.`checked`=0
     && U.`confirmed`=0
+    %s
 ORDER BY U.`id` ASC
 %s
 EOL
         ,
+        (
+            $confirmationGap > 0
+            ? sprintf('&& (U.`registerts`+%u) < UNIX_TIMESTAMP()', $confirmationGap)
+            : ''
+        ),
         (
             $limit > 0
             ? sprintf('LIMIT %u', $limit)
