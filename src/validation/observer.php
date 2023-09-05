@@ -26,6 +26,7 @@ WHERE
     V.`user_id` IS NULL
     && U.`checked`=0
     && U.`confirmed`=0
+    && U.`validts`!=0
     %s
 ORDER BY U.`id` ASC
 %s
