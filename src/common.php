@@ -12,6 +12,16 @@ function send_email(string $from, string $to, string $text): void
     do_wait(mt_rand(1, 10));
 }
 
+function do_log(string $message, array $context = []): void
+{
+    echo date('c.v'), ': ', log_format_message($message, $context), PHP_EOL;
+}
+
+function log_format_message(string $message, array $context = []): string
+{
+    return sprintf('%s (%s)', $message, json_encode($context));
+}
+
 function do_wait(int $seconds): void
 {
     if ($seconds < 1) {

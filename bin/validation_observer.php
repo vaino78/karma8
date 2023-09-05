@@ -11,12 +11,19 @@ $db = include APP_SHARED_PATH . '/db.php';
 
 $limit = env_extract_integer('VALIDATION_OBSERVER_PACK_LIMIT', 100);
 $pause = env_extract_integer('VALIDATION_OBSERVER_PAUSE', 5);
+$i = 0;
+
+do_log('Validation observer started', compact('limit', 'pause'));
+register_shutdown_function('do_log', 'Validation observer finished', [&$i]);
 
 while (true) {
+    $i++;
     $observed = observer\process_pack($db, $limit);
     if ($observed === 0) {
+        do_log('Nothing processed, sleep', compact('pause', 'i'));
         do_wait($pause);
         continue;
     }
 
+    do_log('Created new validation tasks', compact('observed', 'i'));
 }
